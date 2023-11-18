@@ -18,6 +18,7 @@ import Calendar from "./scenes/calendar/calendar";
 import Home from "./scenes/home";
 import Navbar from "./scenes/global/Navbar";
 import Footer from "./components/Footer";
+import About from "./scenes/about";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -28,46 +29,14 @@ function App() {
       <ThemeProvider theme={theme}>
         {/* <CssBaseline /> */}
         <div className="app">
-          <Routes>
-            <Route
-              path="/dashboard"
-              element={
-                <>
-                  <Sidebar isSidebar={isSidebar} />
-                  <main className="content">
-                    <Topbar setIsSidebar={setIsSidebar} />
-                    <Routes>
-                      <Route index element={<Dashboard />} />
-                      <Route path="team" element={<Team />} />
-                      <Route path="contacts" element={<Contacts />} />
-                      <Route path="invoices" element={<Invoices />} />
-                      <Route path="form" element={<Form />} />
-                      <Route path="bar" element={<Bar />} />
-                      <Route path="pie" element={<Pie />} />
-                      <Route path="line" element={<Line />} />
-                      <Route path="faq" element={<FAQ />} />
-                      <Route path="calendar" element={<Calendar />} />
-                      <Route path="geography" element={<Geography />} />
-                    </Routes>
-                  </main>
-                </>
-              }
-            />
-            <Route
-              path="/"
-              element={
-                <>
-                  <main className="container mx-auto px-8">
-                    <Navbar />
-                    <Routes>
-                      <Route index element={<Home />} />
-                    </Routes>
-                    <Footer />
-                  </main>
-                </>
-              }
-            />
-          </Routes>
+          <main className="container mx-auto px-8">
+            <Navbar />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+            </Routes>
+            <Footer />
+          </main>
         </div>
       </ThemeProvider>
     </ColorModeContext.Provider>
