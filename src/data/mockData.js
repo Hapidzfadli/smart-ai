@@ -399,34 +399,42 @@ export const mockBarData = [
 
 export const mockPieData = [
   {
-    id: "hack",
-    label: "hack",
-    value: 239,
+    value: 467260,
+    label: "Sn",
+    id: "Senin",
+  },
+  {
+    value: 436972,
+    label: "Sl",
+    id: "Selasa",
+  },
+
+  {
+    value: 426339,
+    label: "Rb",
+    id: "Rabu",
+  },
+  {
+    value: 453368,
+    label: "Km",
+    id: "Kamis",
+  },
+  {
+    id: "Jumat",
+    label: "Jm",
+    value: 448761,
     color: "hsl(104, 70%, 50%)",
   },
+
   {
-    id: "make",
-    label: "make",
-    value: 170,
-    color: "hsl(162, 70%, 50%)",
+    value: 600905,
+    label: "Sb",
+    id: "Sabtu",
   },
   {
-    id: "go",
-    label: "go",
-    value: 322,
-    color: "hsl(291, 70%, 50%)",
-  },
-  {
-    id: "lisp",
-    label: "lisp",
-    value: 503,
-    color: "hsl(229, 70%, 50%)",
-  },
-  {
-    id: "scala",
-    label: "scala",
-    value: 584,
-    color: "hsl(344, 70%, 50%)",
+    value: 587478,
+    label: "Mn",
+    id: "Minggu",
   },
 ];
 
