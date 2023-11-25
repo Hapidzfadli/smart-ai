@@ -1,6 +1,6 @@
 import { Box, Button, IconButton, Typography, useTheme } from "@mui/material";
 import { tokens } from "../../theme";
-import { mockTransactions } from "../../data/mockData";
+import { mockPieData, mockTransactions } from "../../data/mockData";
 import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
 import LineChart from "../../components/LineChart";
 import GeographyChart from "../../components/GeographyChart";
@@ -12,7 +12,7 @@ import { Person, ShoppingBasket } from "@mui/icons-material";
 import { PieChart, pieArcLabelClasses } from "@mui/x-charts";
 import { BarChart } from "@mui/x-charts/BarChart";
 import Pie from "../../components/PieChart";
-
+import { ResponsivePie } from "@nivo/pie";
 const Dashboard = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -20,6 +20,16 @@ const Dashboard = () => {
   const [orders, setOrders] = useState([]);
   const [totalOrders, setTotalOrders] = useState([]);
   const [totalUsers, setTotalUsers] = useState([]);
+  const [departmentOrderPercentage, setDepartmentOrderPercentage] = useState(
+    []
+  );
+  const [percentageOrders, setPercentageOrders] = useState([
+    {
+      product_name: "Banana",
+      count_of_ordering: 491291,
+      percentage_of_ordering: 14.6825706356,
+    },
+  ]);
   const [rasioOrders, setRasioOrders] = useState([
     { id: 0, value: 1, label: "atleast one reorder", color: "#83A2FF" },
     { id: 1, value: 1, label: "no-reorder", color: "#4CCEAC" },
@@ -55,6 +65,24 @@ const Dashboard = () => {
       count: 1,
     },
   ]);
+  const [countOfOrdering, setCountOfOrdering] = useState([
+    {
+      count_of_ordering: 1,
+      product_name: "",
+    },
+  ]);
+  const [organicRatio, setOrganicRatio] = useState([
+    {
+      false: 89.86676863629044,
+      true: 10.133231363709548,
+    },
+  ]);
+  const [organicPurchaseFrequency, setOrganicPurchaseFrequency] = useState([
+    {
+      false: 68.4912191351244,
+      true: 31.508780864875614,
+    },
+  ]);
 
   useEffect(() => {
     const fetchDataOrders = async () => {
@@ -63,6 +91,32 @@ const Dashboard = () => {
         const data = await response.json();
 
         setOrders(data.orders);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    const fetchDataCountOfOrdering = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost:5000/api/count_of_ordering"
+        );
+        const data = await response.json();
+
+        setCountOfOrdering(data.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    const fetchDataDepartmentOrderPercentage = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost:5000/api/department_order_percentage"
+        );
+        const data = await response.json();
+        console.log(data.data);
+        setDepartmentOrderPercentage(data.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -88,6 +142,19 @@ const Dashboard = () => {
         const data = await response.json();
 
         setPriorOrders(data.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    const PercentageOrdersData = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost:5000/api/percentage_of_ordering"
+        );
+        const data = await response.json();
+
+        setPercentageOrders(data.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -163,6 +230,9 @@ const Dashboard = () => {
         console.error("Error fetching data:", error);
       }
     };
+    fetchDataCountOfOrdering();
+    fetchDataDepartmentOrderPercentage();
+    PercentageOrdersData();
     PriorDayOrders();
     ReorderedProducts();
     fetchRasioByOrders();
@@ -189,6 +259,7 @@ const Dashboard = () => {
     const percent = (params.value / TOTAL) * 100;
     return `${percent.toFixed(2)}%`;
   };
+  console.log();
   return (
     <Box m="20px">
       {/* HEADER */}
@@ -478,7 +549,408 @@ const Dashboard = () => {
             alignItems="center"
             height={"250px"}
           >
-            <Pie />
+            <ResponsivePie
+              data={mockPieData}
+              theme={{
+                axis: {
+                  domain: {
+                    line: {
+                      stroke: colors.grey[100],
+                    },
+                  },
+                  legend: {
+                    text: {
+                      fill: colors.grey[100],
+                    },
+                  },
+                  ticks: {
+                    line: {
+                      stroke: colors.grey[100],
+                      strokeWidth: 1,
+                    },
+                    text: {
+                      fill: colors.grey[100],
+                    },
+                  },
+                },
+                legends: {
+                  text: {
+                    fill: colors.grey[100],
+                  },
+                },
+              }}
+              margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
+              innerRadius={0.5}
+              padAngle={0.7}
+              cornerRadius={3}
+              activeOuterRadiusOffset={8}
+              borderColor={{
+                from: "color",
+                modifiers: [["darker", 0.2]],
+              }}
+              arcLinkLabelsSkipAngle={10}
+              arcLinkLabelsTextColor={colors.grey[100]}
+              arcLinkLabelsThickness={2}
+              arcLinkLabelsColor={{ from: "color" }}
+              enableArcLabels={false}
+              arcLabelsRadiusOffset={0.4}
+              arcLabelsSkipAngle={7}
+              arcLabelsTextColor={{
+                from: "color",
+                modifiers: [["darker", 2]],
+              }}
+              defs={[
+                {
+                  id: "dots",
+                  type: "patternDots",
+                  background: "inherit",
+                  color: "rgba(255, 255, 255, 0.3)",
+                  size: 4,
+                  padding: 1,
+                  stagger: true,
+                },
+                {
+                  id: "lines",
+                  type: "patternLines",
+                  background: "inherit",
+                  color: "rgba(255, 255, 255, 0.3)",
+                  rotation: -45,
+                  lineWidth: 6,
+                  spacing: 10,
+                },
+              ]}
+              legends={[
+                {
+                  anchor: "bottom",
+                  direction: "row",
+                  justify: false,
+                  translateX: 10,
+                  translateY: 56,
+                  itemsSpacing: 0,
+                  itemWidth: 55,
+                  itemHeight: 18,
+                  itemTextColor: "#999",
+                  itemDirection: "left-to-right",
+                  itemOpacity: 1,
+                  symbolSize: 18,
+                  symbolShape: "circle",
+                  effects: [
+                    {
+                      on: "hover",
+                      style: {
+                        itemTextColor: "#000",
+                      },
+                    },
+                  ],
+                },
+              ]}
+            />
+          </Box>
+        </Box>
+
+        {/* ROW 4 */}
+        <Box
+          gridColumn="span 8"
+          gridRow="span 2"
+          sx={{
+            boxShadow: "rgba(0, 0, 0, 0.1) 0px 10px 50px;",
+            borderRadius: 2,
+          }}
+        >
+          <Box
+            mt="25px"
+            p="0 30px"
+            display="flex "
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Box>
+              <Typography
+                variant="h5"
+                fontWeight="600"
+                color={colors.grey[100]}
+              >
+                Percentage of ordering a product
+              </Typography>
+            </Box>
+            <Box>
+              <IconButton>
+                <DownloadOutlinedIcon
+                  sx={{ fontSize: "26px", color: colors.greenAccent[500] }}
+                />
+              </IconButton>
+            </Box>
+          </Box>
+          <Box height="250px" m="-25px 0 0 0">
+            <BarChart
+              dataset={percentageOrders}
+              xAxis={[
+                {
+                  dataKey: "product_name",
+                  scaleType: "band",
+                },
+              ]}
+              series={[
+                {
+                  dataKey: "percentage_of_ordering",
+                },
+              ]}
+            />
+          </Box>
+        </Box>
+        <Box
+          gridColumn="span 4"
+          gridRow="span 2"
+          sx={{
+            boxShadow: "rgba(0, 0, 0, 0.1) 0px 10px 50px;",
+            borderRadius: 2,
+          }}
+          p="30px"
+        >
+          <Typography variant="h5" fontWeight="600">
+            Ratio of department
+          </Typography>
+          <Box
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            height={"250px"}
+          >
+            <ResponsivePie
+              data={departmentOrderPercentage}
+              theme={{
+                axis: {
+                  domain: {
+                    line: {
+                      stroke: colors.grey[100],
+                    },
+                  },
+                  legend: {
+                    text: {
+                      fill: colors.grey[100],
+                    },
+                  },
+                  ticks: {
+                    line: {
+                      stroke: colors.grey[100],
+                      strokeWidth: 1,
+                    },
+                    text: {
+                      fill: colors.grey[100],
+                    },
+                  },
+                },
+                legends: {
+                  text: {
+                    fill: colors.grey[100],
+                  },
+                },
+              }}
+              margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
+              innerRadius={0.5}
+              padAngle={0.7}
+              cornerRadius={3}
+              activeOuterRadiusOffset={8}
+              borderColor={{
+                from: "color",
+                modifiers: [["darker", 0.2]],
+              }}
+              arcLinkLabelsSkipAngle={10}
+              arcLinkLabelsTextColor={colors.grey[100]}
+              arcLinkLabelsThickness={2}
+              arcLinkLabelsColor={{ from: "color" }}
+              enableArcLabels={false}
+              arcLabelsRadiusOffset={0.4}
+              arcLabelsSkipAngle={7}
+              arcLabelsTextColor={{
+                from: "color",
+                modifiers: [["darker", 2]],
+              }}
+              defs={[
+                {
+                  id: "dots",
+                  type: "patternDots",
+                  background: "inherit",
+                  color: "rgba(255, 255, 255, 0.3)",
+                  size: 4,
+                  padding: 1,
+                  stagger: true,
+                },
+                {
+                  id: "lines",
+                  type: "patternLines",
+                  background: "inherit",
+                  color: "rgba(255, 255, 255, 0.3)",
+                  rotation: -45,
+                  lineWidth: 6,
+                  spacing: 10,
+                },
+              ]}
+              legends={[]}
+            />
+          </Box>
+        </Box>
+
+        {/* ROW 5 */}
+        <Box
+          gridColumn="span 4"
+          gridRow="span 2"
+          sx={{
+            boxShadow: "rgba(0, 0, 0, 0.1) 0px 10px 50px;",
+            borderRadius: 2,
+          }}
+        >
+          <Box
+            mt="25px"
+            p="0 30px"
+            display="flex "
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Box>
+              <Typography
+                variant="h5"
+                fontWeight="600"
+                color={colors.grey[100]}
+              >
+                Frequantly of buying organic products
+              </Typography>
+            </Box>
+            <Box>
+              <IconButton>
+                <DownloadOutlinedIcon
+                  sx={{ fontSize: "26px", color: colors.greenAccent[500] }}
+                />
+              </IconButton>
+            </Box>
+          </Box>
+          <Box height="250px" m="-25px 0 0 0">
+            <BarChart
+              dataset={organicPurchaseFrequency}
+              xAxis={[{ scaleType: "band", data: [""] }]}
+              series={[
+                {
+                  dataKey: "true",
+                  label: "true",
+                },
+                {
+                  dataKey: "false",
+                  label: "false",
+                },
+              ]}
+              slotProps={{
+                legend: {
+                  direction: "row",
+                  position: { vertical: "bottom", horizontal: "middle" },
+                  padding: 0,
+                },
+              }}
+            />
+          </Box>
+        </Box>
+        <Box
+          gridColumn="span 4"
+          gridRow="span 2"
+          sx={{
+            boxShadow: "rgba(0, 0, 0, 0.1) 0px 10px 50px;",
+            borderRadius: 2,
+          }}
+        >
+          <Box
+            mt="25px"
+            p="0 30px"
+            display="flex "
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Box>
+              <Typography
+                variant="h5"
+                fontWeight="600"
+                color={colors.grey[100]}
+              >
+                Count of products
+              </Typography>
+            </Box>
+            <Box>
+              <IconButton>
+                <DownloadOutlinedIcon
+                  sx={{ fontSize: "26px", color: colors.greenAccent[500] }}
+                />
+              </IconButton>
+            </Box>
+          </Box>
+          <Box height="250px" m="-25px 0 0 0">
+            <BarChart
+              dataset={countOfOrdering}
+              xAxis={[
+                {
+                  dataKey: "product_name",
+                  scaleType: "band",
+                },
+              ]}
+              series={[
+                {
+                  dataKey: "count_of_ordering",
+                },
+              ]}
+            />
+          </Box>
+        </Box>
+        <Box
+          gridColumn="span 4"
+          gridRow="span 2"
+          sx={{
+            boxShadow: "rgba(0, 0, 0, 0.1) 0px 10px 50px;",
+            borderRadius: 2,
+          }}
+        >
+          <Box
+            mt="25px"
+            p="0 30px"
+            display="flex "
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Box>
+              <Typography
+                variant="h5"
+                fontWeight="600"
+                color={colors.grey[100]}
+              >
+                Ratio of organic products in supermarket
+              </Typography>
+            </Box>
+            <Box>
+              <IconButton>
+                <DownloadOutlinedIcon
+                  sx={{ fontSize: "26px", color: colors.greenAccent[500] }}
+                />
+              </IconButton>
+            </Box>
+          </Box>
+          <Box height="250px" m="-25px 0 0 0">
+            <BarChart
+              dataset={organicRatio}
+              xAxis={[{ scaleType: "band", data: [""] }]}
+              series={[
+                {
+                  dataKey: "true",
+                  label: "true",
+                },
+                {
+                  dataKey: "false",
+                  label: "false",
+                },
+              ]}
+              slotProps={{
+                legend: {
+                  direction: "row",
+                  position: { vertical: "bottom", horizontal: "middle" },
+                  padding: 0,
+                },
+              }}
+            />
           </Box>
         </Box>
       </Box>
