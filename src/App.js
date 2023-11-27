@@ -19,6 +19,9 @@ import Home from "./scenes/home";
 import Navbar from "./scenes/global/Navbar";
 import Footer from "./components/Footer";
 import About from "./scenes/about";
+import GenerateAi from "./scenes/generate";
+import Prediksi from "./scenes/generate/prediksi";
+import Rekomendasi from "./scenes/generate/rekomendasi";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -35,6 +38,9 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
               <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/generate" element={<GenerateAi />} />
+              <Route path="/prediksi" element={<Prediksi />} />
+              <Route path="/rekomendasi" element={<Rekomendasi />} />
             </Routes>
             <Footer />
           </main>

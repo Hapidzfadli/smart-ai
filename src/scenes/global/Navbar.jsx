@@ -45,7 +45,7 @@ function Navbar() {
             </li>
             <li>
               <a
-                href="/"
+                href="/generate"
                 rel="noreferrer"
                 className="flex items-center transition duration-50 hover:scale-105"
               >
