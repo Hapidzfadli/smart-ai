@@ -11,11 +11,7 @@ function CardProduct({ title, price, description, image }) {
   return (
     <Card className=" rounded-lg">
       <CardHeader shadow={false} floated={false} className="h-60 rounded-lg">
-        <img
-          src={image}
-          alt="card-image"
-          className="h-full w-full object-cover"
-        />
+        <img src={image} alt={title} className="h-full w-full object-cover" />
       </CardHeader>
       <CardBody>
         <div className="mb-2 flex items-center justify-between">

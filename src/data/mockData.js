@@ -266,6 +266,60 @@ export const mockDataInvoices = [
   },
 ];
 
+export const options = [
+  {
+    value: "Large Lemon",
+    label: "Large Lemon",
+  },
+  {
+    value: "Organic Avocado",
+    label: "Organic Avocado",
+  },
+  {
+    value: "Organic Baby Spinach",
+    label: "Organic Baby Spinach",
+  },
+  {
+    value: "Organic Strawberries",
+    label: "Organic Strawberries",
+  },
+  {
+    value: "Banana",
+    label: "Banana",
+  },
+  {
+    value: "Asparagus",
+    label: "Asparagus",
+  },
+  {
+    value: "Boneless Skinless Chicken Breasts",
+    label: "Boneless Skinless Chicken Breasts",
+  },
+  {
+    value: "Broccoli Crown",
+    label: "Broccoli Crown",
+  },
+  {
+    value: "Seedless Red Grapes",
+    label: "Seedless Red Grapes",
+  },
+  {
+    value: "Organic Avocado",
+    label: "Organic Avocado",
+  },
+  {
+    value: "Limes",
+    label: "Limes",
+  },
+  {
+    value: "Limes",
+    label: "Limes",
+  },
+  {
+    value: "Organic Garlic",
+    label: "Organic Garlic",
+  },
+];
 export const mockTransactions = [
   {
     txId: "01e4dsa",

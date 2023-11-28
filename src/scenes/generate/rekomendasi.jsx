@@ -1,40 +1,64 @@
-import React from "react";
 import CardProduct from "../../components/CardProduct";
 import Select from "react-select";
 import { useForm, Controller } from "react-hook-form";
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState, React } from "react";
+import { ClipLoader } from "react-spinners";
+import { options } from "../../data/mockData";
+
 const Rekomendasi = () => {
   const { control, handleSubmit, setValue, watch, getValues } = useForm();
 
   const [name] = getValues(["name"]);
   const [select, setSelect] = useState(null);
-  const options = [
-    {
-      value: "Unsweetened Original Almond Breeze Almond Milk",
-      label: "Unsweetened Original Almond Breeze Almond Milk",
-    },
-    {
-      value: "Honey Bunches Of Oats Roasted Cereal",
-      label: "Honey Bunches Of Oats Roasted Cereal",
-    },
-    {
-      value: "Dentastix Fresh, Large",
-      label: "Dentastix Fresh, Large",
-    },
-    {
-      value: "Bathroom Tissue Double Rolls",
-      label: "Bathroom Tissue Double Rolls",
-    },
-    {
-      value: "Sensitive Skin Moisturizing Cream Soap Bars",
-      label: "Sensitive Skin Moisturizing Cream Soap Bars",
-    },
-    {
-      value: "Regular Pork Sausage Tube",
-      label: "Regular Pork Sausage Tube",
-    },
-  ];
+  const [product, setProduct] = useState([]);
+  const API_URL = "http://localhost:5000/api/recommendations";
+  const [apiUrl, setApiUrl] = useState(API_URL);
+  const [category1, setCategory1] = useState(null);
+  const [category2, setCategory2] = useState(null);
+  const [category3, setCategory3] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchDataProduct = async () => {
+      setLoading(true);
+      try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+        let itemss = [];
+        var arrayOfObjects = data.slice(0, 8).map(function (itemList) {
+          return itemList.map(function (item) {
+            itemss.push({
+              title: item,
+              imageUrl: `https://source.unsplash.com/random/?${item}&food`,
+            });
+            return { item };
+          });
+        });
+        console.log(itemss);
+        setProduct(itemss);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false); // Set status loading menjadi false setelah data diambil
+      }
+    };
+    fetchDataProduct();
+  }, [apiUrl]);
+
+  useEffect(() => {
+    let apiUrl = API_URL;
+
+    // Check if category1 is provided
+    if (category1) {
+      apiUrl += "?category=" + category1;
+
+      // Check if both category1 and category2 are provided
+      if (category2) {
+        apiUrl += "&category=" + category2;
+      }
+    }
+    setApiUrl(apiUrl);
+  }, [category1, category2, category3]);
 
   useEffect(() => {
     console.log(select);
@@ -48,85 +72,65 @@ const Rekomendasi = () => {
           </p>
         </div>
 
+        <div className="title-landing flex justify-center my-4">
+          <p className="font-normal text-center w-1/2 text-lg">
+            Pilih Product Yang Telah Kamu Beli
+          </p>
+        </div>
+
         <div className="flex justify-center">
-          <p className="font-normal w-1/4 my-5">
+          <div className="grid grid-cols-2 gap-4 my-4">
             <Select
               name="name"
+              className="basic-single w-80"
+              classNamePrefix="select"
+              isDisabled={false}
+              isClearable={true}
+              isSearchable={true}
+              onChange={(val) => {
+                setSelect(val.value);
+                setCategory1(val.value);
+              }}
+              placeholder={"Pilih Product"}
+              options={options}
+            />
+
+            <Select
+              name="category2"
               className="basic-single"
               classNamePrefix="select"
               isDisabled={false}
               isClearable={true}
               isSearchable={true}
-              onChange={(val) => setSelect(val.value)}
+              placeholder={"Pilih Product"}
+              onChange={(val) => {
+                setSelect(val.value);
+                setCategory2(val.value);
+              }}
               options={options}
             />
-          </p>
-        </div>
-        {select && (
-          <div className="grid grid-cols-4 gap-8  mx-auto my-8">
-            {select === "Unsweetened Original Almond Breeze Almond Milk" && (
-              <>
-                <CardProduct
-                  title={"Granola"}
-                  description={"Nature's Path Organic Vanilla Almond Granola"}
-                  image={
-                    "https://nadiashealthykitchen.com/wp-content/uploads/2023/02/high-protein-vegan-granola_7-min.jpg"
-                  }
-                />
-                <CardProduct
-                  title={"Smoothie Mix"}
-                  description={
-                    "Orgain Organic Protein Almond Milk Smooth Chocolate"
-                  }
-                  image={
-                    "https://www.cubesnjuliennes.com/wp-content/uploads/2022/02/Mixed-Berry-Smoothie-1.jpg"
-                  }
-                />
-                <CardProduct
-                  title={"Oatmeal"}
-                  image={
-                    "https://www.eatingwell.com/thmb/uqTftLVNd2XUEXrP1SUwvGEk1k4=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/61111401-a00efff0a71d4c09ad365021645d3a7b.jpg"
-                  }
-                  description={
-                    "Bob's Red Mill Gluten-Free Oatmeal Cup with Almond Milk"
-                  }
-                />
-                <CardProduct
-                  title={"Pancake Mix"}
-                  image={
-                    "https://www.simplyrecipes.com/thmb/yNaovEQ4pRuusa-qHs-9SLtuZGs=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/__opt__aboutcom__coeus__resources__content_migration__simply_recipes__uploads__2019__05__Pancake-Mix-LEAD-08-a65e8184e74542a6b0ecac9dedd9decc.jpg"
-                  }
-                  description={"Simple Mills Almond Flour Pancake & Waffle Mix"}
-                />
-              </>
-            )}
-            {select === "Honey Bunches Of Oats Roasted Cereal" && (
-              <CardProduct
-                title={"Large Lemon"}
-                image={
-                  "https://m.media-amazon.com/images/I/81c2j4kWugL._AC_UL480_FMwebp_QL65_.jpg"
-                }
-              />
-            )}
-            {select === "Dentastix Fresh, Large" && (
-              <CardProduct
-                title={"Organic Avocado"}
-                image={
-                  "https://learnenglishteens.britishcouncil.org/sites/teens/files/styles/article/public/rs7776_thinkstockphotos-856586464_1-low.jpg?itok=zHdfQ6Ij"
-                }
-              />
-            )}
-            {select === "Bathroom Tissue Double Rolls" && (
-              <CardProduct
-                title={"Organic Baby spinch"}
-                image={
-                  "https://m.media-amazon.com/images/I/61dezrJv2TL._AC_UL480_FMwebp_QL65_.jpg"
-                }
-              />
-            )}
-            {select === "Regular Pork Sausage Tube" && <></>}
           </div>
-        )}
+        </div>
+        {select &&
+          (loading ? (
+            <ClipLoader color="#36d7b7" />
+          ) : (
+            <div>
+              <p className="font-semibold text-lg">Orang lain juga membeli:</p>
+              <div className="grid grid-cols-4 gap-8  mx-auto my-8">
+                {product.map(function (item) {
+                  return (
+                    <CardProduct
+                      key={item.id} // Jangan lupa tambahkan key untuk setiap elemen dalam loop
+                      title={item.title}
+                      description={item.description} // Gunakan properti dari objek item
+                      image={item.imageUrl} // Gunakan properti dari objek item
+                    />
+                  );
+                })}
+              </div>
+            </div>
+          ))}
       </div>
     </div>
   );
