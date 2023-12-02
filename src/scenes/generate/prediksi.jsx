@@ -24,6 +24,12 @@ function Prediksi() {
     // Lakukan sesuatu dengan nilai userIdValue, misalnya kirim ke server, dll.
   };
 
+  const headers = {
+    method: "GET",
+    headers: new Headers({
+      "ngrok-skip-browser-warning": "69420",
+    }),
+  };
   const handleCardSelect = (id) => {
     // Toggle card selection
     setSelectedCards((prevSelected) => {
@@ -54,7 +60,7 @@ function Prediksi() {
     const fetchDataProduct = async () => {
       setLoading(true);
       try {
-        const response = await fetch(apiUrl);
+        const response = await fetch(apiUrl, headers);
         const data = await response.json();
         let itemss = [];
         var arrayOfObjects = data.slice(0, 8).map(function (itemList) {

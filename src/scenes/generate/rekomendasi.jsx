@@ -20,11 +20,18 @@ const Rekomendasi = () => {
   const [category3, setCategory3] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const headers = {
+    method: "GET",
+    headers: new Headers({
+      "ngrok-skip-browser-warning": "69420",
+    }),
+  };
+
   useEffect(() => {
     const fetchDataProduct = async () => {
       setLoading(true);
       try {
-        const response = await fetch(apiUrl);
+        const response = await fetch(apiUrl, headers);
         const data = await response.json();
         let itemss = [];
         var arrayOfObjects = data.slice(0, 8).map(function (itemList) {
