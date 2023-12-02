@@ -312,10 +312,6 @@ export const options = [
     label: "Limes",
   },
   {
-    value: "Limes",
-    label: "Limes",
-  },
-  {
     value: "Organic Garlic",
     label: "Organic Garlic",
   },

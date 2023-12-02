@@ -1,6 +1,5 @@
 "use client";
 
-
 import { useTheme } from "@mui/material";
 import React from "react";
 import { tokens } from "../../theme";
@@ -45,38 +44,38 @@ const About = () => {
           <div class="grid grid-cols-3 gap-4 w-2/3 mx-auto my-8">
             <Card
               title="Annisa Amaliyah Rizkiyani"
-              image={"/assets/image/4x/women-1.png"}
+              image={"/assets/image/annisa.png"}
               role={"UI/UX Designer"}
               universitas={"Sekolah Tinggi Teknologi Bandung"}
             ></Card>
             <Card
               title="Febrina Qoonitah"
-              image={"/assets/image/4x/women-2.png"}
+              image={"/assets/image/orbit_febby-modified.png"}
               role={"Data Engineer"}
               universitas={"Sekolah Tinggi Teknologi Bandung"}
             ></Card>
             <Card
               title="Hapid Fadli"
-              image={"/assets/image/4x/men-3.png"}
+              image={"/assets/image/hapidd.png"}
               role={"Web Developer"}
               universitas={"Universitas Pasundan"}
             ></Card>
             <Card
               title="Hanna Sazidah"
-              image={"/assets/image/4x/women-3.png"}
+              image={"/assets/image/orbit_hanna-modified.png"}
               role={"Project Manager"}
               universitas={"Universitas Diponegoro"}
             ></Card>
             <Card
               title=" Nazma Fauziah"
-              image={"/assets/image/4x/women-2.png"}
+              image={"/assets/image/nazma.png"}
               role={"Site Administrator"}
               universitas={"Universitas Pendidikan Indonesia"}
             ></Card>
 
             <Card
               title="Wawan Gunawan"
-              image={"/assets/image/4x/men-2.png"}
+              image={"/assets/image/orbit_wawan-modified.png"}
               role={"Project Officer"}
               universitas={"Universitas Islam Nusantara"}
             ></Card>

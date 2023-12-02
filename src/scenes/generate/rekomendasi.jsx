@@ -94,21 +94,22 @@ const Rekomendasi = () => {
               placeholder={"Pilih Product"}
               options={options}
             />
-
-            <Select
-              name="category2"
-              className="basic-single"
-              classNamePrefix="select"
-              isDisabled={false}
-              isClearable={true}
-              isSearchable={true}
-              placeholder={"Pilih Product"}
-              onChange={(val) => {
-                setSelect(val.value);
-                setCategory2(val.value);
-              }}
-              options={options}
-            />
+            {category1 && (
+              <Select
+                name="category2"
+                className="basic-single"
+                classNamePrefix="select"
+                isDisabled={false}
+                isClearable={true}
+                isSearchable={true}
+                placeholder={"Pilih Product"}
+                onChange={(val) => {
+                  setSelect(val.value);
+                  setCategory2(val.value);
+                }}
+                options={options}
+              />
+            )}
           </div>
         </div>
         {select &&

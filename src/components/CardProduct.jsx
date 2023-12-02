@@ -7,9 +7,14 @@ import {
   Button,
 } from "@material-tailwind/react";
 
-function CardProduct({ title, price, description, image }) {
+function CardProduct({ id, title, description, image, onSelect, isSelected }) {
   return (
-    <Card className=" rounded-lg">
+    <Card
+      className={`rounded-lg cursor-pointer ${
+        isSelected ? "border-2 border-blue-500" : ""
+      }`}
+      onClick={() => onSelect(id)}
+    >
       <CardHeader shadow={false} floated={false} className="h-60 rounded-lg">
         <img src={image} alt={title} className="h-full w-full object-cover" />
       </CardHeader>
@@ -17,9 +22,6 @@ function CardProduct({ title, price, description, image }) {
         <div className="mb-2 flex items-center justify-between">
           <Typography color="blue-gray" className="font-medium">
             {title}
-          </Typography>
-          <Typography color="blue-gray" className="font-medium">
-            {price}
           </Typography>
         </div>
         <Typography
@@ -36,7 +38,7 @@ function CardProduct({ title, price, description, image }) {
           fullWidth={true}
           className="bg-gray-500 text-white shadow-none hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
         >
-          Add to Cart
+          Add Item
         </Button>
       </CardFooter>
     </Card>
