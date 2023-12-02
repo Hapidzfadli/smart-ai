@@ -17,6 +17,8 @@ const Dashboard = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
+  const API_BASE_URL =
+    process.env.REACT_APP_API_BASE_URL || "http://localhost:5000";
   const [orders, setOrders] = useState([]);
   const [totalOrders, setTotalOrders] = useState([]);
   const [totalUsers, setTotalUsers] = useState([]);
@@ -87,7 +89,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchDataOrders = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/orders");
+        const response = await fetch(API_BASE_URL + "/api/orders");
         const data = await response.json();
 
         setOrders(data.orders);
@@ -98,9 +100,7 @@ const Dashboard = () => {
 
     const fetchDataCountOfOrdering = async () => {
       try {
-        const response = await fetch(
-          "http://localhost:5000/api/count_of_ordering"
-        );
+        const response = await fetch(API_BASE_URL + "/api/count_of_ordering");
         const data = await response.json();
 
         setCountOfOrdering(data.data);
@@ -112,7 +112,7 @@ const Dashboard = () => {
     const fetchDataDepartmentOrderPercentage = async () => {
       try {
         const response = await fetch(
-          "http://localhost:5000/api/department_order_percentage"
+          API_BASE_URL + "/api/department_order_percentage"
         );
         const data = await response.json();
         console.log(data.data);
@@ -125,7 +125,7 @@ const Dashboard = () => {
     const ReorderedProducts = async () => {
       try {
         const response = await fetch(
-          "http://localhost:5000/api/reordered_products_histogram"
+          API_BASE_URL + "/api/reordered_products_histogram"
         );
         const data = await response.json();
 
@@ -137,7 +137,7 @@ const Dashboard = () => {
     const PriorDayOrders = async () => {
       try {
         const response = await fetch(
-          "http://localhost:5000/api/days_since_prior_order_histogram"
+          API_BASE_URL + "/api/days_since_prior_order_histogram"
         );
         const data = await response.json();
 
@@ -150,7 +150,7 @@ const Dashboard = () => {
     const PercentageOrdersData = async () => {
       try {
         const response = await fetch(
-          "http://localhost:5000/api/percentage_of_ordering"
+          API_BASE_URL + "/api/percentage_of_ordering"
         );
         const data = await response.json();
 
@@ -163,7 +163,7 @@ const Dashboard = () => {
     const fetchTotalUserOrders = async () => {
       try {
         const response = await fetch(
-          "http://localhost:5000/api/total_orders_and_users"
+          API_BASE_URL + "/api/total_orders_and_users"
         );
         const data = await response.json();
         setTotalOrders(data.data.total_orders);
@@ -174,7 +174,7 @@ const Dashboard = () => {
     };
     const fetchRasioOrders = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/rasio_pesanan");
+        const response = await fetch(API_BASE_URL + "/api/rasio_pesanan");
         const data = await response.json();
 
         const updatedChartData = rasioOrders.map((item) => {
@@ -208,9 +208,7 @@ const Dashboard = () => {
 
     const fetchRasioByOrders = async () => {
       try {
-        const response = await fetch(
-          "http://localhost:5000/api/rasio_by_orders"
-        );
+        const response = await fetch(API_BASE_URL + "/api/rasio_by_orders");
         const data = await response.json();
 
         const transformedData = data.data.map((item) => ({

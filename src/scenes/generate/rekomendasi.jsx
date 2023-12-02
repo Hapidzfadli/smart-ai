@@ -11,7 +11,9 @@ const Rekomendasi = () => {
   const [name] = getValues(["name"]);
   const [select, setSelect] = useState(null);
   const [product, setProduct] = useState([]);
-  const API_URL = "http://localhost:5000/api/recommendations";
+  const API_BASE_URL =
+    process.env.REACT_APP_API_BASE_URL || "http://localhost:5000";
+  const API_URL = `${API_BASE_URL}/api/recommendations`;
   const [apiUrl, setApiUrl] = useState(API_URL);
   const [category1, setCategory1] = useState(null);
   const [category2, setCategory2] = useState(null);
