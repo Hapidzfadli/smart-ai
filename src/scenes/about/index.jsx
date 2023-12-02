@@ -23,13 +23,6 @@ const About = () => {
                 Program MSIB Kampus Merdeka Batch 5 Di Orbit Future Academy
               </p>
             </div>
-            <div className="image header relative overflow-hidden">
-              <img
-                src="/assets/image/kelompok.png"
-                alt="Hero Header"
-                className="object-cover h-72 mx-auto my-8"
-              />
-            </div>
           </div>
         </div>
 
