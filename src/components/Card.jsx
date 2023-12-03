@@ -5,9 +5,9 @@ function Card({
   title,
   role,
   universitas,
-  instagram,
-  github,
-  linkedin,
+  instagram = "",
+  github = "",
+  linkedin = "",
 }) {
   return (
     <div className="max-w-sm transition duration-300 hover:shadow-2xl cursor-pointer bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
