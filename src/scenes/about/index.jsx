@@ -39,22 +39,32 @@ const About = () => {
               title="Annisa Amaliyah Rizkiyani"
               image={"/assets/image/annisa.png"}
               role={"UI/UX Designer"}
+              instagram={"nisa_ar5"}
               universitas={"Sekolah Tinggi Teknologi Bandung"}
             ></Card>
             <Card
               title="Febrina Qoonitah"
               image={"/assets/image/orbit_febby-modified.png"}
               role={"Data Engineer"}
+              instagram={"febrinaqh"}
+              github={"febrinaqh"}
+              linkedin={"febrina-qoonitah-a46bb2215"}
               universitas={"Sekolah Tinggi Teknologi Bandung"}
             ></Card>
             <Card
               title="Hapid Fadli"
               image={"/assets/image/hapidd.png"}
               role={"Web Developer"}
+              instagram={"hapidzf21"}
+              github={"Hapidzfadli"}
+              linkedin={"hapidzfadli"}
               universitas={"Universitas Pasundan"}
             ></Card>
             <Card
               title="Hanna Sazidah"
+              instagram={"nnaszdh_"}
+              linkedin={"hanna-sazidah-631254260"}
+              github={"annszdh"}
               image={"/assets/image/orbit_hanna-modified.png"}
               role={"Project Manager"}
               universitas={"Universitas Diponegoro"}
@@ -63,6 +73,7 @@ const About = () => {
               title=" Nazma Fauziah"
               image={"/assets/image/nazma.png"}
               role={"Site Administrator"}
+              instagram={"nazmafzh_"}
               universitas={"Universitas Pendidikan Indonesia"}
             ></Card>
 
@@ -70,6 +81,8 @@ const About = () => {
               title="Wawan Gunawan"
               image={"/assets/image/orbit_wawan-modified.png"}
               role={"Project Officer"}
+              linkedin={"wawguna15"}
+              instagram={"wawan.guna15"}
               universitas={"Universitas Islam Nusantara"}
             ></Card>
           </div>
