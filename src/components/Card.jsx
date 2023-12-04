@@ -36,7 +36,7 @@ function Card({
             <FaGithub />
           </a>
           <a
-            href={`https://www.linkedin.com/${linkedin}`}
+            href={`https://www.linkedin.com/in/${linkedin}`}
             class="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5"
           >
             <FaLinkedin />
